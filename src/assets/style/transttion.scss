@@ -1,0 +1,16 @@
+.side-down-enter, .side-down-leave-to {
+  transform: translate3d(0,-100%,0);
+}
+.side-up-enter, .side-up-leave-to {
+  transform: translate3d(0,100%,0);
+}
+.side-down-enter-to, .side-down-leave, .side-up-enter-to, .side-up-leave {
+  transform: translate3d(0,0,0);
+}
+.side-down-enter-active, .side-down-leave-active, .side-up-enter-active, .side-up-leave-active {
+  transition: all .3s linear;
+}
+
+
+
+

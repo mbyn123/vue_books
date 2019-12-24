@@ -1,8 +1,5 @@
 @import "./reset";
+@import "./mixin";
+@import "/transttion";
 
 
-//rem适配,rem与px换算
-$ratio: 375/10;
-@function px($px){
-  @return $px/$ratio +rem
-}

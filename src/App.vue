@@ -1,8 +1,6 @@
 <template>
   <div id="app">
-    <span class='icon-en'></span>
-    <span class='icon-menu'></span>
-    <div class="text">abcfefg</div>
+    <router-view></router-view>
   </div>
 </template>
 
@@ -18,13 +16,9 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 
 <style lang="scss">
-  @import './assets/style/global.scss';
-  .icon-en {
-    font-size: 30px;
-    color: red
-  }
-  .text {
-    font-family: 'cabin';
-    font-size: px(45);
+  #app{
+    width:100%;
+    height:100%;
+    overflow: hidden;
   }
 </style>
