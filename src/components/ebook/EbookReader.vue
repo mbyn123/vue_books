@@ -10,23 +10,24 @@
 
 <script>
   import Epub from 'epubjs'
-  import { mapGetters } from 'vuex'
+  import { ebookMixin } from '../../utils/mixin'
   export default {
     name: 'EbookReader',
     mounted () {
-      this.initEpub()
+      const fileName = this.$route.params.fileName.split('|').join('/')// 动态路由，以书籍名称作为路径，来实现访问
+      this.setFileName(fileName).then(() => {
+        this.initEpub()
+      })
     },
-    computed: {
-      ...mapGetters(['menuVisible'])
-    },
+    mixins: [ebookMixin],
     methods: {
       // 渲染电子书
       initEpub () {
         //获取电子书资源路径
-        const fileName = this.$route.params.fileName.split('|').join('/')// 动态路由，以书籍名称作为路径，来实现访问
-        const url = 'http://192.168.8.110:8081/epub/Biomedicine/' + fileName + '.epub'
+        const url = 'http://192.168.8.110:8081/epub/Biomedicine/' + this.fileName + '.epub'
         // 生成book
         this.book = new Epub(url)
+        this.setCurrentBook(this.book) // 将当前book对象传入vuex,可以让其他功能获取到这个对象，更改电子书默认配置
         console.log(this.book)
         // 生成rendition，用来渲染
         this.rendition = this.book.renderTo('read', {
@@ -53,6 +54,8 @@
         } else {
           this.hideMenuAndTitle()
         }
+        event.preventDefault()
+        event.stopPropagation()
       },
       // 上一页
       renditionPrev () {
@@ -64,7 +67,8 @@
       },
       // 菜单栏，显示隐藏
       hideMenuAndTitle () {
-        this.$store.dispatch('setMenuVisible', !this.menuVisible)
+        this.setMenuVisible(!this.menuVisible)
+        this.setSettingVisible(-1)
       }
     }
   }

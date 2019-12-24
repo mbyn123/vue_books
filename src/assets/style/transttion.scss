@@ -1,8 +1,10 @@
+@import './mixin';
+
 .side-down-enter, .side-down-leave-to {
   transform: translate3d(0,-100%,0);
 }
 .side-up-enter, .side-up-leave-to {
-  transform: translate3d(0,100%,0);
+  transform: translate3d(0,px(108),0);
 }
 .side-down-enter-to, .side-down-leave, .side-up-enter-to, .side-up-leave {
   transform: translate3d(0,0,0);
