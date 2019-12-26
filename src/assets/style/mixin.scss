@@ -22,3 +22,9 @@ $ratio: 375/10;
   justify-content: flex-end;
   align-items: center;
 }
+
+@mixin between{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

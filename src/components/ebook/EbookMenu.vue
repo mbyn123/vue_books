@@ -17,18 +17,21 @@
       </div>
     </transition>
     <EbookSettingFont></EbookSettingFont>
+    <EbookSettingFontPopup></EbookSettingFontPopup>
   </div>
 </template>
 
 <script>
   import EbookSettingFont from '../../components/ebook/EbookSettingFont'
+  import EbookSettingFontPopup from '../../components/ebook/EbookSettingFontPopup'
  import { ebookMixin } from '../../utils/mixin'
 
  export default {
     name: 'EbookMenu',
     mixins: [ebookMixin],
     components: {
-      EbookSettingFont
+      EbookSettingFont,
+      EbookSettingFontPopup
     },
    methods: {
       // 点击打开，修改字体大小的功能栏

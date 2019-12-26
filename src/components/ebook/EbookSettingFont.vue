@@ -1,6 +1,8 @@
 <template>
     <transition name="side-up">
+        <!-- 设置字体功能  -->
       <div class="font-bar" v-show="menuVisible && settingVisible === 0">
+        <!-- 设置字体大小-->
         <div class="setting-font-size">
           <div class="preview" :style="{fontSize:fontSizeList[0].fontSize+'px'}">A</div>
           <div class="select">
@@ -16,6 +18,17 @@
           </div>
           <div class="preview" :style="{fontSize:fontSizeList[fontSizeList.length-1].fontSize+'px'}">A</div>
         </div>
+        <!-- 设置字体风格-->
+        <div class="setting-font-family" @click="fontshow()">
+          <div class="setting-font-family-text-wrapper">
+            <div class="setting-font-family-text">{{defaultFontFamily}}</div>
+          </div>
+          <div class="setting-font-family-icon-wrapper">
+            <div class="setting-font-family-icon">
+              <span class="icon-forward"></span>
+            </div>
+          </div>
+        </div>
       </div>
     </transition>
 </template>
@@ -23,6 +36,7 @@
 <script>
   import { ebookMixin } from '../../utils/mixin'
   import { FONT_SIZE_LIST } from '../../utils/book'
+  import { saveFontSize } from '../../utils/localStorage'
 
   export default {
     name: 'EbookSettingFont',
@@ -39,7 +53,12 @@
         this.setDefaultFontSize(fontsize)
         // 从vuex中获取到当前book对象，更改默认字体配置
         this.currentBook.rendition.themes.fontSize(fontsize)
-      }
+        // 将改变默认字体大小的设置,存入localStroge
+        saveFontSize(this.fileName,this.defaultFontSize)
+      },
+      fontshow () {
+        this.setFontFamilyVisible(true)
+  }
     }
   }
 </script>
@@ -55,8 +74,10 @@
   bottom:px(48);
   left:0;
   z-index: 150;
+  display: flex;
+  flex-direction: column;
   .setting-font-size{
-    /*flex: 2;*/
+    flex: 2;
     display: flex;
     height: 100%;
     .preview {
@@ -91,7 +112,7 @@
         }
         .point-wrapper {
           position: relative;
-          /*flex: 0 0 0;*/
+          flex: 0 0 0;
           width: 0;
           height: px(7);
           border-left: px(1) solid #ccc;
@@ -103,7 +124,7 @@
             height:px(20);
             border-radius: 50%;
             background: #fff;
-            box-shadow:0 px(4) px(4) rgba(0,0,0,.15);
+            box-shadow:px(4) px(4) px(4) rgba(0,0,0,.15);
             @include center;
             .small-point {
               width:px(5);
@@ -115,6 +136,12 @@
         }
       }
     }
-  }
+  };
+  .setting-font-family{
+   flex:1;
+   font-size: px(16);
+    @include center;
+    border-bottom: 1px solid #fff;
+}
 }
 </style>

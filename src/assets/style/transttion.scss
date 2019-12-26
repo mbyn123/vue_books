@@ -13,6 +13,18 @@
   transition: all .3s linear;
 }
 
+// 字体风格菜单栏，显示隐藏动画
 
+.popup-slide-up-enter,.popup-slide-up-leave-to {
+  transform: translate3d(0,100%,0);
+}
+
+.popup-slide-up-enter-to, .popup-slide-up-leave {
+  transform: translate3d(0,0,0);
+}
+
+.popup-slide-up-enter-active, .popup-slide-up-leave-active {
+  transition: all .3s linear;
+}
 
 
