@@ -1,29 +1,38 @@
 <template>
   <div>
     <transition name="side-up">
-      <div class="menu" :class="{'hind-box-show':settingVisible >= 0}" v-show="menuVisible">
+      <div class="menu-wrapper" :class="{'hind-box-show':settingVisible >= 0}" v-show="menuVisible">
+        <!-- 目录 -->
         <div class="icon-wrapper">
           <span class="icon-menu"></span>
         </div>
+        <!-- 设置进度 -->
         <div class="icon-wrapper">
           <span class="icon-progress"></span>
         </div>
-        <div class="icon-wrapper">
+        <!-- 设置主题 -->
+        <div class="icon-wrapper" @click="showSetting(1)">
           <span class="icon-bright"></span>
         </div>
+        <!-- 设置字体 -->
         <div class="icon-wrapper">
           <span class="icon-A" @click="showSetting(0)"></span>
         </div>
       </div>
     </transition>
-    <EbookSettingFont></EbookSettingFont>
-    <EbookSettingFontPopup></EbookSettingFontPopup>
+    <!-- 字体大小，组件 -->
+    <EbookSettingFont/>
+    <!-- 字体风格，组件 -->
+   <EbookSettingFontPopup/>
+    <!-- 阅读器主题，组件 -->
+   <EbookSettingTheme/>
   </div>
 </template>
 
 <script>
   import EbookSettingFont from '../../components/ebook/EbookSettingFont'
   import EbookSettingFontPopup from '../../components/ebook/EbookSettingFontPopup'
+  import EbookSettingTheme from '../../components/ebook/EbookSettingTheme'
  import { ebookMixin } from '../../utils/mixin'
 
  export default {
@@ -31,7 +40,8 @@
     mixins: [ebookMixin],
     components: {
       EbookSettingFont,
-      EbookSettingFontPopup
+      EbookSettingFontPopup,
+      EbookSettingTheme
     },
    methods: {
       // 点击打开，修改字体大小的功能栏
@@ -45,7 +55,7 @@
 <style scoped lang="scss">
   @import '../../assets/style/global.scss';
 
-  .menu {
+  .menu-wrapper {
     width: 100%;
     height: px(48);
     display: flex;

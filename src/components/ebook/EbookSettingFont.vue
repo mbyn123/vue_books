@@ -1,7 +1,7 @@
 <template>
     <transition name="side-up">
         <!-- 设置字体功能  -->
-      <div class="font-bar" v-show="menuVisible && settingVisible === 0">
+      <div class="setting-wrapper" v-show="menuVisible && settingVisible === 0">
         <!-- 设置字体大小-->
         <div class="setting-font-size">
           <div class="preview" :style="{fontSize:fontSizeList[0].fontSize+'px'}">A</div>
@@ -65,7 +65,7 @@
 
 <style scoped lang="scss">
   @import '../../assets/style/global.scss';
-.font-bar{
+.setting-wrapper{
   width:100%;
   height:px(60);
   background: #fff;
@@ -141,7 +141,7 @@
    flex:1;
    font-size: px(16);
     @include center;
-    border-bottom: 1px solid #fff;
+    /*border-bottom: 1px solid #fff;*/
 }
 }
 </style>

@@ -1,10 +1,10 @@
 <template>
   <transition name="side-down">
-    <div class="title" v-show="menuVisible">
-      <div class="icon-wrapper">
+    <div class="title-wrapper" v-show="menuVisible">
+      <div class="left">
         <span class="icon-back"></span>
       </div>
-      <div class="icon-setting">
+      <div class="right">
         <div class="icon-wrapper">
           <span class="icon-shelf"></span>
         </div>
@@ -31,7 +31,7 @@
 <style scoped lang="scss">
   @import '../../assets/style/global.scss';
 
-  .title {
+  .title-wrapper {
     position: absolute;
     top: 0;
     left: 0;
@@ -43,12 +43,12 @@
     display: flex;
     font-size: px(25);
 
-    .icon-wrapper {
+    .left {
       @include center;
       padding: 0 px(10);
     }
 
-    .icon-setting {
+    .right {
       flex: 1;
       @include right;
     }

@@ -1,5 +1,5 @@
 <template>
-  <div class="EbookReader">
+  <div class="ebook-reader">
     <div id="read"></div>
     <div class="ebook-reader-mask"
          @touchstart="starts"
@@ -11,7 +11,14 @@
 <script>
   import Epub from 'epubjs'
   import { ebookMixin } from '../../utils/mixin'
-import { getFontFamily, saveFontFamily,getFontSize,saveFontSize } from '../../utils/localStorage'
+  import {
+    getFontFamily,
+    saveFontFamily,
+    getFontSize,
+    saveFontSize,
+    getTheme,
+    saveTheme
+  } from '../../utils/localStorage'
   export default {
     name: 'EbookReader',
     mounted () {
@@ -26,7 +33,7 @@ import { getFontFamily, saveFontFamily,getFontSize,saveFontSize } from '../../ut
       // 渲染电子书
       initEpub () {
         //获取电子书资源路径
-        const url = 'http://192.168.8.110:8081/epub/BusinessandManagement/' + this.fileName + '.epub'
+        const url = process.env.VUE_APP_RES_URL + '/epub/BusinessandManagement/' + this.fileName + '.epub'
         // 生成book
         this.book = new Epub(url)
         this.setCurrentBook(this.book) // 将当前book对象传入vuex,可以让其他功能获取到这个对象，更改电子书默认配置
@@ -47,10 +54,10 @@ import { getFontFamily, saveFontFamily,getFontSize,saveFontSize } from '../../ut
         })
         // 通过rendition.display渲染，加载，初始化电子书，并从localStroge中获取到当前弟子书的相关配置
         this.rendition.display().then(() => {
-          //获取缓存中的电子书字体风格配置
-          this.initFontFamily()
-          //获取缓存中的电子书字体大小配置
-          this.initFontSize()
+          this.initFontFamily() //获取缓存中的电子书字体风格配置
+          this.initFontSize()//获取缓存中的电子书字体大小配置
+          this.initTheme()// 获取缓存中的电子书字体主题配置
+          this.initGlobalStyle() // 设置全局主题，样式
         })
       },
       // 触摸开始，翻页
@@ -106,6 +113,22 @@ import { getFontFamily, saveFontFamily,getFontSize,saveFontSize } from '../../ut
           this.rendition.themes.fontSize(fontSize)
           this.setDefaultFontSize(fontSize)
         }
+      },
+      // 注册主题,获取缓存中的电子书字体主题配置
+      initTheme(){
+        // 从缓存中获取阅读器，主题设置
+        let Theme = getTheme(this.fileName)
+        if (!Theme) { // 如果缓存不存在，就将当前vuex中的默认主题，存入缓存
+          Theme = this.themeList[0].name
+          saveTheme(this.fileName,this.defaultTheme)
+        }
+        this.setDefaultTheme(Theme)
+        this.themeList.forEach(theme => {
+          // 向阅读器，注册主题
+          this.rendition.themes.register(theme.name,theme.style)
+        })
+         // 缓存存在，就选择缓存中的阅读器，主题设置
+        this.rendition.themes.select(Theme)
       }
     }
   }
@@ -114,7 +137,7 @@ import { getFontFamily, saveFontFamily,getFontSize,saveFontSize } from '../../ut
 <style scoped lang="scss">
   @import "../../assets/style/global";
 
-  .EbookReader {
+  .ebook-reader {
     width: 100%;
     height: 100%;
 

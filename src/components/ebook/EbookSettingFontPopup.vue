@@ -1,18 +1,18 @@
 <template>
   <transition name="popup-slide-up">
-  <div class="font-family" v-show="fontFamilyVisible">
-    <div class="font-family-list-title">
-      <div class="family-list-title-icon" @click="hide">
+  <div class="ebook-popup-list" v-show="fontFamilyVisible">
+    <div class="ebook-popup-title">
+      <div class="ebook-popup-title-icon" @click="hide">
         <span class="icon-down2"></span>
       </div>
-      <div class="family-list-title-text">{{$t('book.selectFont')}}</div>
+      <div class="ebook-popup-title-text">{{$t('book.selectFont')}}</div>
     </div>
     <div>
-      <div class="font-family-list">
-        <div class="font-family-list-item" v-for="(item ,index) in fontFamily" :key="index"
+      <div class="ebook-popup-list-wrapper">
+        <div class="ebook-popup-item" v-for="(item ,index) in fontFamily" :key="index"
              @click="setFamily(item.font)">
-          <div class="font-family-list-item-text" :class="{'selected':isSelected(item.font)}">{{item.font}}</div>
-          <div class="font-family-list-item-icon" v-show="isSelected(item.font)">
+          <div class="ebook-popup-item-text" :class="{'selected':isSelected(item.font)}">{{item.font}}</div>
+          <div class="ebook-popup-item-check" v-show="isSelected(item.font)">
             <span class="icon-check"></span>
           </div>
         </div>
@@ -64,7 +64,7 @@
 <style scoped lang="scss">
   @import '../../assets/style/global.scss';
 
-  .font-family {
+  .ebook-popup-list {
     background: #fff;
     box-shadow: 0 px(-8) px(8) rgba(0, 0, 0, .15);
     position: absolute;
@@ -72,25 +72,25 @@
     left: 0;
     width: 100%;
     z-index: 152;
-    .font-family-list-title {
+    .ebook-popup-title {
       display: flex;
       font-size: px(18);
       border-bottom: 1px solid #ccc;
       padding: px(5) 0;
-      .family-list-title-icon {
+      .ebook-popup-title-icon {
         padding: px(5);
       }
-      .family-list-title-text {
+      .ebook-popup-title-text {
         flex: 1;
         @include center
       }
     };
-    .font-family-list {
+    .ebook-popup-list-wrapper {
       font-size: px(18);
-      .font-family-list-item {
+      .ebook-popup-item {
         display: flex;
         padding: px(5);
-        .font-family-list-item-text {
+        .ebook-popup-item-text {
           flex: 1;
           &.selected {
             color: #346cb9;
@@ -98,7 +98,7 @@
           }
         ;
         };
-        .font-family-list-item-icon {
+        .ebook-popup-item-check {
           .icon-check {
             color: #346cb9;
             font-weight: bold;
